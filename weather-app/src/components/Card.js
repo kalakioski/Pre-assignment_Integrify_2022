@@ -1,60 +1,117 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { LocationSearch } from "./SearchBar";
 
-const Container = styled.div`
+const WeatherContainer = styled.div`
   display: flex;
+  height: 50vh;
+  width: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
-const Weather = styled.div`
+const WeatherBox = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  top: 50%;
   padding: 16px 32px;
-  border-radius: 4px;
+  border-radius: 10px;
   border: solid;
+  height: 300px;
+  width: 200px;
+  background: #ffeccf;
+  font-family: "Red Hat Display", sans-serif;
+  font-size: 24px;
+  outline: none;
 `;
 
-const WeatherDay = ({ min, max, weatherType }) => {
+const Image = styled.img`
+  margin-bottom: 40px;
+  height: 75%;
+`;
+
+const WeatherDay = ({ min, max, weatherType, weatherKey }) => {
   return (
-    <div>
-      <div>Type: {weatherType}</div>
-      <div>
-        Temp: {min} / {max}
-      </div>
-    </div>
+    <WeatherContainer>
+      <WeatherBox>
+        <div>
+          <Image
+            src={`https://developer.accuweather.com/sites/default/files/${weatherKey}-s.png`}
+          />
+        </div>
+        <div>Type: {weatherType}</div>
+        <div>
+          {min} °C | {max} °C
+        </div>
+      </WeatherBox>
+    </WeatherContainer>
   );
 };
 
 export const Card = () => {
-  const locationKey = "202396";
-  const apiKey = "QeQ3pkGMeTuSFmj1GfDKkqbr622p5mYC";
+  const apiKey = "0GimKxX72quvpNVqGWhKny9eON4nvbNY";
 
+  const [locationKey, setLocationKey] = useState();
   const [weatherInfo, setWeatherInfo] = useState();
 
+  const padNum = (num) => {
+    const stringNum = num + "";
+    const stringLength = stringNum.length;
+
+    if (stringLength === 1) {
+      return "0" + stringNum; // 4 -> 04
+    } else {
+      return stringNum; // 17 -> 17
+    }
+  };
+
   useEffect(() => {
-    fetch(
-      `http://dataservice.accuweather.com/forecasts/v1/daily/1day/202396?apikey=QeQ3pkGMeTuSFmj1GfDKkqbr622p5mYC&metric=true`
-    )
-      .then((res) => res.json())
-      .then((res) =>
-        setWeatherInfo(
-          res.DailyForecasts.map((df) => {
-            return {
-              min: df.Temperature.Minimum.Value,
-              max: df.Temperature.Maximum.Value,
-              weatherType: df.Day.IconPhrase,
-            };
-          })
-        )
-      );
-  }, []);
+    console.log(locationKey);
+    if (locationKey) {
+      fetch(
+        `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${locationKey}?apikey=${apiKey}&metric=true`
+      )
+        .then((res) => res.json())
+        .then((res) => {
+          console.log(res);
+          setWeatherInfo(
+            res.DailyForecasts.map((df) => {
+              return {
+                min: df.Temperature.Minimum.Value,
+                max: df.Temperature.Maximum.Value,
+                weatherType: df.Day.IconPhrase,
+                weatherKey: padNum(df.Day.Icon),
+              };
+            })
+          );
+        });
+    }
+  }, [locationKey]);
 
   return (
-    <Container>
-      <Weather>
-        {!!weatherInfo &&
-          weatherInfo.map((i, index) => (
-            <WeatherDay min={i.min} max={i.max} weatherType={i.weatherType} />
-          ))}
-      </Weather>
-    </Container>
+    <div>
+      <div>
+        <LocationSearch
+          onKeyFound={(keyInfo) => {
+            setLocationKey(keyInfo.key);
+            console.log(locationKey);
+          }}
+        />
+      </div>
+      {!!weatherInfo &&
+        weatherInfo.map((i, index) => (
+          <div key={index}>
+            <WeatherDay
+              min={i.min}
+              max={i.max}
+              weatherType={i.weatherType}
+              weatherKey={i.weatherKey}
+            />
+          </div>
+        ))}
+    </div>
   );
 };

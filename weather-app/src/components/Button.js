@@ -1,13 +1,16 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  min-width: 100px;
-  padding: 16px 32px;
-  border-radius: 4px;
-  border: none;
-  background: #141414;
-  color: #fff;
+  width: 150px;
+  height: 65px;
+  border-radius: 10px;
+  border: solid black;
+  background: #ffeccf;
+  color: black;
   font-size: 24px;
   cursor: pointer;
   margin-left: 10px;
+  font-family: "Red Hat Display", sans-serif;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
 `;
