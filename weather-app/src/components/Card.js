@@ -42,7 +42,7 @@ const WeatherDay = ({ min, max, weatherType, weatherKey }) => {
             src={`https://developer.accuweather.com/sites/default/files/${weatherKey}-s.png`}
           />
         </div>
-        <div>Type: {weatherType}</div>
+        <div>{weatherType}</div>
         <div>
           {min} °C | {max} °C
         </div>
@@ -52,7 +52,7 @@ const WeatherDay = ({ min, max, weatherType, weatherKey }) => {
 };
 
 export const Card = () => {
-  const apiKey = "0GimKxX72quvpNVqGWhKny9eON4nvbNY";
+  const apiKey = "QeQ3pkGMeTuSFmj1GfDKkqbr622p5mYC";
 
   const [locationKey, setLocationKey] = useState();
   const [weatherInfo, setWeatherInfo] = useState();
@@ -97,7 +97,6 @@ export const Card = () => {
         <LocationSearch
           onKeyFound={(keyInfo) => {
             setLocationKey(keyInfo.key);
-            console.log(locationKey);
           }}
         />
       </div>
