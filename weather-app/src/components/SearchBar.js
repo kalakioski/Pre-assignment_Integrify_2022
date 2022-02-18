@@ -26,7 +26,7 @@ export const LocationSearch = ({ onKeyFound }) => {
 
   const getLocation = (location) => {
     console.log(location);
-    const url = `http://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${location}`;
+    const url = `https://dataservice.accuweather.com/locations/v1/cities/search?apikey=${apiKey}&q=${location}`;
     fetch(url)
       .then((res) => res.json())
       .then((res) => res.find((l) => l.Rank < 35))

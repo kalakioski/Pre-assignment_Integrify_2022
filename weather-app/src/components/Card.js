@@ -72,7 +72,7 @@ export const Card = () => {
     console.log(locationKey);
     if (locationKey) {
       fetch(
-        `http://dataservice.accuweather.com/forecasts/v1/daily/1day/${locationKey}?apikey=${apiKey}&metric=true`
+        `https://dataservice.accuweather.com/forecasts/v1/daily/1day/${locationKey}?apikey=${apiKey}&metric=true`
       )
         .then((res) => res.json())
         .then((res) => {
