@@ -21,7 +21,7 @@ const SearchBar = styled.input`
 `;
 
 export const LocationSearch = ({ onKeyFound }) => {
-  const apiKey = "QeQ3pkGMeTuSFmj1GfDKkqbr622p5mYC";
+  const apiKey = "t5533RyA2x7QPOJKOp7o3nXjVAy11ybT";
   const [LocationInput, setLocationInput] = useState("");
 
   const getLocation = (location) => {

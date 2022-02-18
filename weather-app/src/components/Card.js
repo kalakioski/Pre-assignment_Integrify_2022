@@ -52,7 +52,7 @@ const WeatherDay = ({ min, max, weatherType, weatherKey }) => {
 };
 
 export const Card = () => {
-  const apiKey = "QeQ3pkGMeTuSFmj1GfDKkqbr622p5mYC";
+  const apiKey = "t5533RyA2x7QPOJKOp7o3nXjVAy11ybT";
 
   const [locationKey, setLocationKey] = useState();
   const [weatherInfo, setWeatherInfo] = useState();
